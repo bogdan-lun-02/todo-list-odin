@@ -40,7 +40,7 @@ export function updateProjectForm(e) {
   }
   else {
     let updatedProject = app.allProjects.find(element => element.projectNumber === Number(projectNumber));
-    updatedProject.update(newTitle);
+    app.updateProject(updatedProject, newTitle);
     domControl.updateProjectList();
     document.querySelector('#form-popup4').classList.toggle('show-form');
     domControl.displayProject(updatedProject);

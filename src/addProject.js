@@ -22,7 +22,8 @@ export function addProjectForm(e) {
   if (app.allProjects.find(element => element.title === title.value)) {
     alert('Name already taken');
   } else {
-    app.addProject(title.value, app.projectNumber++);
+    app.addProject(title.value, ++app.projectNumber);
+    localStorage.setItem("projectNumber", app.projectNumber);
   }
   toggleProjectForm();
   domControl.updateProjectList();

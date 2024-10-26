@@ -54,10 +54,10 @@ export function updateForm(e) {
   if (project !== targetProject) {
 
     target.projectList.splice(target.projectList.findIndex(element => element.number === Number(targetNumber)), 1);
-    newTarget.addItem(title, desc, date, priority, project, status, app.number++);
+    app.addItem(newTarget, title, desc, date, priority, project, status, app.number++);
   } else if (project === targetProject) {
     let updatedItem = target.projectList.find(element => element.number === Number(targetNumber));
-    updatedItem.update(title, desc, date, priority, project, status);
+    app.updateItem(updatedItem, title, desc, date, priority, project, status);
   }
 
   domControl.displayProject(target);

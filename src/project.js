@@ -7,14 +7,5 @@ export class Project {
   }
 
   projectList = [];
-
-  addItem(title, description, dueDate, priority, project, status, number) {
-    const todo = new TodoItem(title, description, dueDate, priority, project, status, number);
-    this.projectList.push(todo);
-  }
-
-  update(title) {
-    this.title = title;
-  }
 }
 

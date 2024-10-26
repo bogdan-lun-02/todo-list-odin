@@ -24,7 +24,8 @@ export function readForm(e) {
   let project = form.elements.projects;
 
   let target = app.allProjects.find(element => element.title === project.value);
-  target.addItem(title.value, desc.value, date.value, priority.value, project.value, 'in progress', app.number++);
+  app.addItem(target, title.value, desc.value, date.value, priority.value, project.value, 'in progress', app.number++);
+  localStorage.setItem("number", app.number);
   domControl.displayProject(target);
   toggleTodoForm();
   console.log(app);

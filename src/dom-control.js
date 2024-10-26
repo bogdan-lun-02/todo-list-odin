@@ -108,20 +108,12 @@ export const domControl = {
 
   completeTask(e) {
     let projectTitle = e.currentTarget.parentElement.parentElement.dataset.project;
-    console.log(projectTitle);
-
     let itemNumber = e.target.parentElement.parentElement.dataset.number;
-    console.log(itemNumber);
-
 
     let targetProject = app.allProjects.find(element => element.title === projectTitle);
-    console.log(targetProject);
-
     let targetItem = targetProject.projectList.find(element => element.number === Number(itemNumber));
-    console.log(targetItem);
 
-
-    targetItem.complete();
+    app.completeItem(targetItem);
     domControl.displayProject(targetProject);
   },
 
@@ -135,6 +127,7 @@ export const domControl = {
     let numberTarget = projectTarget.projectList.findIndex(element => element.number === Number(itemNumber));
 
     projectTarget.projectList.splice(numberTarget, 1);
+    app.save();
 
     domControl.displayProject(projectTarget);
   }

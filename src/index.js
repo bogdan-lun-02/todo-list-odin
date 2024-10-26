@@ -13,18 +13,16 @@ import './style.css'
 import 'boxicons'
 
 
+
 export const app = new TodoApp();
-// localStorage.setItem('projectNumber', 0);
+// window.addEventListener('load', app.firstLoad)
 
-
-// let defaultProject = app.addProject('Default', localStorage.getItem('projectNumber'));
 
 // app.addItem(defaultProject, 'project', 'project-desc', '2024-10-20', 'top', 'Default', 'in progress', app.number++);
 // app.addItem(defaultProject, 'another', 'project-desc', '2024-11-30', 'low', 'Default', 'in progress', app.number++);
 // app.addItem(defaultProject, 'third', 'project-desc', '2024-12-30', 'medium', 'Default', 'in progress', app.number++);
 
 // domControl.displayProject(defaultProject);
-// app.getProjects();
 
 
 
