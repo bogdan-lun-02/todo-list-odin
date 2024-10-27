@@ -1,5 +1,6 @@
 import { app } from "./index";
 import { domControl } from "./dom-control";
+import { format, parse } from "date-fns";
 
 export function toggleTodoForm() {
   const form = document.querySelector('#form-popup');
@@ -26,7 +27,7 @@ export function readForm(e) {
   let target = app.allProjects.find(element => element.title === project.value);
   app.addItem(target, title.value, desc.value, date.value, priority.value, project.value, 'in progress', app.number++);
   localStorage.setItem("number", app.number);
-  domControl.displayProject(target);
+  domControl.displayProject(target.projectList);
   toggleTodoForm();
   console.log(app);
 }

@@ -60,7 +60,9 @@ export function updateForm(e) {
     app.updateItem(updatedItem, title, desc, date, priority, project, status);
   }
 
-  domControl.displayProject(target);
+
+  let main = document.querySelector('.main-tasks');
+  main.innerHTML = '';
+  domControl.displayProject(target.projectList);
   updateForm.classList.toggle('show-form');
-  console.log(app);
 }

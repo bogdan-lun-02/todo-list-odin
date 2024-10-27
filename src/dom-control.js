@@ -4,15 +4,15 @@ import { addProjectForm } from "./addProject";
 import { updateProjectForm } from "./updateProject";
 import { toggleUpdateProjectForm } from "./updateProject";
 import { app } from "./index";
-import { format, parse, parseISO } from 'date-fns'
+import { compareAsc, compareDesc, format, parse, parseISO } from 'date-fns'
 
 export const domControl = {
 
   displayProject(target) {
     let main = document.querySelector('.main-tasks');
     main.innerHTML = '';
-    main.appendChild(document.createElement('h1')).textContent = `${target.title}`
-    target.projectList.forEach(element => {
+    // main.appendChild(document.createElement('h1')).textContent = `${target[0].project}`
+    target.forEach(element => {
       const item = document.createElement('div');
       item.classList.add('item');
       if (element.priority === 'top') {
@@ -36,7 +36,10 @@ export const domControl = {
 
     const tasks = document.querySelectorAll('.item');
     tasks.forEach(element => {
-      element.addEventListener('dblclick', toggleUpdateForm);
+      if (element.lastChild.previousSibling.previousSibling.textContent !== 'complete') {
+        element.addEventListener('dblclick', toggleUpdateForm);
+      }
+      else return null;
     });
 
     const checkSigns = document.querySelectorAll('.markComplete');
@@ -88,7 +91,9 @@ export const domControl = {
   navigateToProject(e) {
     let indexOfProject = e.currentTarget.dataset.projectnumber;
     let project = app.allProjects.find(element => element.projectNumber === Number(indexOfProject));
-    domControl.displayProject(project);
+    let main = document.querySelector('.main-tasks');
+    main.innerHTML = '';
+    domControl.displayProject(project.projectList);
   },
 
   closeFormByClickOutside(e) {
@@ -114,7 +119,7 @@ export const domControl = {
     let targetItem = targetProject.projectList.find(element => element.number === Number(itemNumber));
 
     app.completeItem(targetItem);
-    domControl.displayProject(targetProject);
+    domControl.displayProject(targetProject.projectList);
   },
 
   deleteTask(e) {
@@ -129,7 +134,36 @@ export const domControl = {
     projectTarget.projectList.splice(numberTarget, 1);
     app.save();
 
-    domControl.displayProject(projectTarget);
+    domControl.displayProject(projectTarget.projectList);
+  },
+
+  showGeneral() {
+
+    let main = document.querySelector('.main-tasks');
+    app.generalProjects = [];
+    app.allProjects.forEach(project => {
+      project.projectList.forEach(item => app.generalProjects.push(item))
+    })
+
+    app.save();
+    console.log(app.generalProjects);
+    console.log(app);
+    domControl.displayProject(app.generalProjects)
+    // main.querySelector('h1').textContent = 'All'
+  },
+
+  showDate() {
+    app.sortedByDateProjects = [];
+    app.allProjects.forEach(project => {
+      project.projectList.forEach(item => app.sortedByDateProjects.push(item))
+    })
+
+    app.sortedByDateProjects.sort(function (a, b) {
+      return compareAsc(a.dueDate, b.dueDate)
+    });
+
+    console.log(app.sortedByDateProjects);
+    domControl.displayProject(app.sortedByDateProjects);
+
   }
 }
-

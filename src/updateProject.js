@@ -43,6 +43,6 @@ export function updateProjectForm(e) {
     app.updateProject(updatedProject, newTitle);
     domControl.updateProjectList();
     document.querySelector('#form-popup4').classList.toggle('show-form');
-    domControl.displayProject(updatedProject);
+    domControl.displayProject(updatedProject.projectList);
   }
 }

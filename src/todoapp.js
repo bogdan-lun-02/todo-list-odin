@@ -7,20 +7,24 @@ export class TodoApp {
   }
 
   allProjects = JSON.parse(localStorage.getItem('allProjects')) || [];
+  generalProjects = JSON.parse(localStorage.getItem('generalProjects')) || [];
+  sortedByDateProjects = [];
+
   number = parseInt(localStorage.getItem("number")) || 0;
   projectNumber = parseInt(localStorage.getItem("projectNumber")) || 0;
 
 
-  // firstLoad() {
-  //   if (!localStorage["alertdisplayed"]) {
-  //     app.addProject('Default', ++app.projectNumber);
-  //     localStorage.setItem("projectNumber", this.projectNumber);
-  //     localStorage.setItem("alertdisplayed", true)
-  //   }
-  // }
+  firstLoad() {
+    if (!localStorage["alertdisplayed"]) {
+      app.addProject('Default', ++app.projectNumber);
+      localStorage.setItem("projectNumber", app.projectNumber);
+      localStorage.setItem("alertdisplayed", true)
+    }
+  }
 
   save() {
     localStorage.setItem('allProjects', JSON.stringify(this.allProjects));
+    localStorage.setItem('generalProjects', JSON.stringify(this.generalProjects))
   }
 
   addProject(title, number) {
