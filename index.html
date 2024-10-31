@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Just Do It</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<script defer src="main.js"></script></head>
+
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <div class="top">
+        <div class="logo">
+          <i class='bx bxs-chevrons-up'></i>
+          <span>JUST DO IT</span>
+        </div>
+      </div>
+      <div class="btn" id="addTodo">Add Task</div>
+      <div class="btn" id="addProject">Add Project</div>
+      <div class="btn" id="general">All</div>
+      <div class="btn" id="date">Sort by urgency</div>
+      <ul id='projectsFolder'>
+      </ul>
+    </div>
+    <div class="main">
+      <div class="main-tasks"></div>
+      <!-- The forms -->
+      <div class="form-popup" id="form-popup">
+        <form action="" class="form-container" id="todoForm" name="todoForm">
+          <h1 class="form-headline">New Task</h1>
+
+          <label for="title"><b>Name</b></label>
+          <input type="text" placeholder="Enter title" name="title" required>
+
+          <label for="desc"><b>Description</b></label>
+          <input type="text" placeholder="Enter short description" name="desc">
+
+          <label for="date"><b>Due date</b></label>
+          <input type="date" placeholder="Choose date" name="date">
+
+          <label for="priority">Choose priority:</label>
+          <select id="priority" name="priority">
+            <option value="top">Top</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+
+          <label for="projects">Choose project:</label>
+          <select id="projectSelect" name="projects">
+          </select>
+
+          <button type="submit" class="btn add-task" id="add-task">Add task</button>
+        </form>
+      </div>
+      <!-- update form -->
+      <div class="form-popup" id="form-popup2">
+        <form action="" class="form-container" id="updateForm" name="updateForm">
+          <h1 class="form-headline">Change Task</h1>
+
+          <label for="title"><b>Name</b></label>
+          <input type="text" placeholder="Enter title" name="title" required>
+
+          <label for="desc"><b>Description</b></label>
+          <input type="text" placeholder="Enter short description" name="desc">
+
+          <label for="date"><b>Due date</b></label>
+          <input type="date" placeholder="Choose date" name="date">
+
+          <label for="priority">Choose priority:</label>
+          <select id="priority" name="priority">
+            <option value="top">Top</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+
+          <label for="projects">Choose project:</label>
+          <select id="projectSelect" name="projects">
+          </select>
+
+          <button type="submit" class="btn update-task" id="update-task">Update task</button>
+        </form>
+      </div>
+      <!-- add-project form -->
+      <div class="form-popup" id="form-popup3">
+        <form action="" class="form-container" id="addProject" name="addProject">
+          <h1 class="form-headline">Add Project</h1>
+          <label for="title">Enter Name</label>
+          <input type="text" placeholder="Enter title" name="title" required>
+
+          <button type="submit" class="btn add-project" id="add-project">Add project</button>
+        </form>
+      </div>
+      <!-- update-project-form -->
+      <div class="form-popup" id="form-popup4">
+        <form action="" class="form-container" id="updateProject" name="updateProject">
+          <h1 class="form-headline">Change Name</h1>
+          <label for="title" id="upd-project-label">Enter New Name</label>
+          <input type="text" placeholder="Enter title" name="title" required>
+
+          <button type="submit" class="btn update-project" id="update-project">Update project</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+
+</body>
+
+</html>
