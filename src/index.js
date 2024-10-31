@@ -16,24 +16,14 @@ import 'boxicons'
 
 export const app = new TodoApp();
 app.firstLoad();
+window.addEventListener('load', domControl.showGeneral)
+window.addEventListener('load', app.checkTime)
 
 const general = document.querySelector('#general');
 general.addEventListener('click', domControl.showGeneral);
 
 const date = document.querySelector('#date');
 date.addEventListener('click', domControl.showDate);
-
-
-// app.addItem(defaultProject, 'project', 'project-desc', '2024-10-20', 'top', 'Default', 'in progress', app.number++);
-// app.addItem(defaultProject, 'another', 'project-desc', '2024-11-30', 'low', 'Default', 'in progress', app.number++);
-// app.addItem(defaultProject, 'third', 'project-desc', '2024-12-30', 'medium', 'Default', 'in progress', app.number++);
-
-// domControl.displayProject(defaultProject);
-
-
-
-
-
 
 const btn1 = document.getElementById('addTodo');
 btn1.addEventListener('click', toggleTodoForm);

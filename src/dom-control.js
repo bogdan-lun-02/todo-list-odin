@@ -8,10 +8,25 @@ import { compareAsc, compareDesc, format, parse, parseISO } from 'date-fns'
 
 export const domControl = {
 
-  displayProject(target) {
+  checkLocation() {
+    if (app.location === 'general') {
+      domControl.showGeneral();
+      app.location = 'general'
+      return true;
+    }
+    else if (app.location === 'date') {
+      domControl.showDate();
+      app.location = 'date';
+      return true;
+    }
+    else return false;
+  },
+
+  displayProject(target, name) {
     let main = document.querySelector('.main-tasks');
     main.innerHTML = '';
-    // main.appendChild(document.createElement('h1')).textContent = `${target[0].project}`
+    main.appendChild(document.createElement('h1')).textContent = `${name}`
+    app.checkTime();
     target.forEach(element => {
       const item = document.createElement('div');
       item.classList.add('item');
@@ -25,7 +40,16 @@ export const domControl = {
       item.setAttribute('data-number', element.number);
       item.appendChild(document.createElement('p')).textContent = element.title;
       item.appendChild(document.createElement('p')).textContent = element.description;
-      item.appendChild(document.createElement('p')).textContent = element.dueDate;
+
+      if (element.dueToday) {
+        item.appendChild(document.createElement('p')).textContent = 'Due Today!';
+        item.lastChild.style.color = 'red'
+      }
+      else if (element.outdated) {
+        item.appendChild(document.createElement('p')).textContent = `${element.dueDate} (outdated)`
+      } else {
+        item.appendChild(document.createElement('p')).textContent = element.dueDate;
+      }
       item.appendChild(document.createElement('p')).textContent = element.status;
       if (element.status === 'complete') item.lastChild.style.color = '#04AA6D';
 
@@ -93,14 +117,15 @@ export const domControl = {
     let project = app.allProjects.find(element => element.projectNumber === Number(indexOfProject));
     let main = document.querySelector('.main-tasks');
     main.innerHTML = '';
-    domControl.displayProject(project.projectList);
+    app.checkTime();
+    domControl.displayProject(project.projectList, project.title);
+    app.location = '';
   },
 
   closeFormByClickOutside(e) {
     const formsToClose = document.querySelectorAll('.form-popup');
     if (e.target.parentElement.classList.contains('form-container') ||
       e.target.parentElement.classList.contains('form-popup')) {
-      console.log('it works');
       return;
     } else {
       formsToClose.forEach(element => {
@@ -119,7 +144,10 @@ export const domControl = {
     let targetItem = targetProject.projectList.find(element => element.number === Number(itemNumber));
 
     app.completeItem(targetItem);
-    domControl.displayProject(targetProject.projectList);
+
+    if (!domControl.checkLocation()) {
+      domControl.displayProject(targetProject.projectList, targetProject.title);
+    }
   },
 
   deleteTask(e) {
@@ -134,22 +162,26 @@ export const domControl = {
     projectTarget.projectList.splice(numberTarget, 1);
     app.save();
 
-    domControl.displayProject(projectTarget.projectList);
+    if (!domControl.checkLocation()) {
+      domControl.displayProject(projectTarget.projectList, projectTarget.title);
+    }
   },
 
   showGeneral() {
 
     let main = document.querySelector('.main-tasks');
+
+
     app.generalProjects = [];
     app.allProjects.forEach(project => {
       project.projectList.forEach(item => app.generalProjects.push(item))
     })
 
     app.save();
-    console.log(app.generalProjects);
-    console.log(app);
-    domControl.displayProject(app.generalProjects)
-    // main.querySelector('h1').textContent = 'All'
+    main.classList.toggle('showGeneral');
+
+    domControl.displayProject(app.generalProjects, 'All')
+    app.location = 'general';
   },
 
   showDate() {
@@ -162,8 +194,7 @@ export const domControl = {
       return compareAsc(a.dueDate, b.dueDate)
     });
 
-    console.log(app.sortedByDateProjects);
-    domControl.displayProject(app.sortedByDateProjects);
-
+    domControl.displayProject(app.sortedByDateProjects, 'Sorted by urgency');
+    app.location = 'date';
   }
 }

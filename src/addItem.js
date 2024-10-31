@@ -1,6 +1,6 @@
 import { app } from "./index";
 import { domControl } from "./dom-control";
-import { format, parse } from "date-fns";
+import { format, isPast, isToday, parse } from "date-fns";
 
 export function toggleTodoForm() {
   const form = document.querySelector('#form-popup');
@@ -21,13 +21,28 @@ export function readForm(e) {
   }
   let desc = form.elements.desc;
   let date = form.elements.date;
+  if (date.value !== '' && !isToday(parse(date.value, 'yyyy-MM-dd', new Date())) && isPast(parse(date.value, 'yyyy-MM-dd', new Date()))) {
+    let label2 = document.querySelector('label[for="date"]');
+    label2.style.color = 'red';
+    label2.textContent = 'Input valid date!'
+    return;
+  }
+
+  document.querySelector('label[for="date"]').textContent = 'Due Date';
+  document.querySelector('label[for="date"]').style.color = 'aliceblue';
+  document.querySelector('label[for="title"]').textContent = 'Name';
+  document.querySelector('label[for="title"]').style.color = 'aliceblue';
+
   let priority = form.elements.priority;
   let project = form.elements.projects;
 
   let target = app.allProjects.find(element => element.title === project.value);
   app.addItem(target, title.value, desc.value, date.value, priority.value, project.value, 'in progress', app.number++);
   localStorage.setItem("number", app.number);
-  domControl.displayProject(target.projectList);
+  app.checkTime();
+  domControl.displayProject(target.projectList, target.title);
+  title.value = '';
+  desc.value = '';
+  date.value = '';
   toggleTodoForm();
-  console.log(app);
 }

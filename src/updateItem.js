@@ -63,6 +63,11 @@ export function updateForm(e) {
 
   let main = document.querySelector('.main-tasks');
   main.innerHTML = '';
-  domControl.displayProject(target.projectList);
+  app.checkTime();
+  if (!domControl.checkLocation()) {
+    domControl.displayProject(target.projectList, target.title);
+  }
+
+
   updateForm.classList.toggle('show-form');
 }

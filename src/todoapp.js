@@ -1,3 +1,4 @@
+import { format, isFuture, isPast, isToday, parse } from "date-fns";
 import { app } from ".";
 import { Project } from "./project";
 import { TodoItem } from "./todoitem";
@@ -59,6 +60,19 @@ export class TodoApp {
   completeItem(target) {
     target.status = 'complete';
     this.save();
+  }
+
+  checkTime() {
+    app.generalProjects.forEach(element => {
+      const parsed = parse(element.dueDate, 'yyyy-MM-dd', new Date());
+      if (isToday(parsed) === true) element.dueToday = true;
+      else if (isPast(parsed) === true) element.outdated = true;
+      else {
+        element.dueToday = false;
+        element.outdated = false;
+      }
+    });
+    app.save();
   }
 }
 
